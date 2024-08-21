@@ -8,4 +8,5 @@ dependencies:
   - pytest
   - ipython
   - pip
+  - pandas
   - plotly
