@@ -4,3 +4,4 @@ sympy
 pytest
 pandas
 plotly
+scipy
