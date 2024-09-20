@@ -113,16 +113,26 @@ class Poisson:
         return np.sqrt(self.dx*np.sum((uj-u)**2))
 
 def test_poisson():
-    assert False
-
-if __name__ == '__main__':
     L = 2
     sol = Poisson(L=L)
-    ue = sp.exp(4*sp.cos(x))
-    #ue = x**2
-    bc = (ue.subs(x, 0), ue.subs(x, L))
-    u = sol(100, bc=bc, f=sp.diff(ue, x, 2))
-    print('Manufactured solution: ', ue)
-    print(f'Boundary conditions: u(0)={bc[0]:2.4f}, u(L)={bc[1]:2.2f}')
-    print(f'Discretization: N = {sol.N}')
-    print(f'L2-error {sol.l2_error(u, ue)}')
+    ue1 = sp.exp(4*sp.cos(x))
+    ue2 = x**2 + 2*x + 4
+    bc1 = (ue1.subs(x, 0), ue1.subs(x, L))
+    bc2 = (ue2.subs(x, 0), ue2.subs(x, L))
+    u1 = sol(100, bc=bc1, f=sp.diff(ue1, x, 2))
+    u2 = sol(100, bc=bc2, f=sp.diff(ue2, x, 2))
+    assert sol.l2_error(u1, ue1) < 1e-2     #This will not be exact, but error should be low
+    assert sol.l2_error(u2, ue2) < 1e-12    #This should be exact
+
+if __name__ == '__main__':
+    # L = 2
+    # sol = Poisson(L=L)
+    # ue = sp.exp(4*sp.cos(x))
+    # #ue = x**2
+    # bc = (ue.subs(x, 0), ue.subs(x, L))
+    # u = sol(100, bc=bc, f=sp.diff(ue, x, 2))
+    # print('Manufactured solution: ', ue)
+    # print(f'Boundary conditions: u(0)={bc[0]:2.4f}, u(L)={bc[1]:2.2f}')
+    # print(f'Discretization: N = {sol.N}')
+    # print(f'L2-error {sol.l2_error(u, ue)}')
+    test_poisson()
